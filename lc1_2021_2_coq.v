@@ -83,7 +83,7 @@ Qed.
 End regra3'.
 
 Section regra4.
-   Variables phi1 phi2 gamma: Prop.
+ Variable gamma: Prop.
   
   Hypothesis H: phi1 \/ phi2.
   Hypothesis H1: phi1 -> gamma.
@@ -100,3 +100,48 @@ Proof.
 Qed.    
 End regra4.
 
+Section regra5.
+
+  Hypothesis H: phi1 -> phi2.
+
+  Lemma imp_i: phi1 -> phi2.
+  Proof.
+    assumption.
+  Qed.
+End regra5.
+
+Section regra6.
+
+  Hypothesis H1: phi1 -> phi2.
+  Hypothesis H2: phi1.
+
+  Lemma imp_e: phi2.
+  Proof.
+    apply H1.
+    assumption.
+  Qed.
+End regra6.
+
+Section regra7.
+
+  Hypothesis H1: phi1 -> False.
+
+  Lemma neg_i: ~ phi1.
+  Proof.
+    intro H.
+    apply H1.
+    assumption.
+  Qed.
+End regra7.
+
+Section regra8.
+
+  Hypothesis H1: ~phi1.
+  Hypothesis H2: phi1.
+
+  Lemma neg_e: False.
+  Proof.
+    contradiction.
+  Qed.
+
+  
