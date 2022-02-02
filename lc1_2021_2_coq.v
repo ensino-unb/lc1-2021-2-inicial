@@ -143,5 +143,27 @@ Section regra8.
   Proof.
     contradiction.
   Qed.
+End regra8.
 
-  
+Section ex23.
+
+  Hypothesis H: (~~ phi1) -> (~~phi2).
+  Lemma dup_imp: ~~(phi1 -> phi2).
+  Proof.
+    intro H'.
+    cut (~phi2).
+    - apply H.
+      intro H''.
+      cut (phi1 -> phi2).
+      + assumption.
+      + intro H'''.
+        apply False_ind.
+        contradiction.
+    - intro H''.
+      cut (phi1->phi2).
+      + assumption.
+      + intro H'''.
+        assumption.
+  Qed.
+End ex23.
+
