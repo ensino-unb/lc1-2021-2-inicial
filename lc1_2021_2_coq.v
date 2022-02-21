@@ -167,3 +167,22 @@ Section ex23.
   Qed.
 End ex23.
 
+Section aula06.
+
+  Variable a: Prop.
+  Axiom LP: (((a \/ ~a) -> ~a) -> (a \/ ~a)) -> (a \/ ~a).
+
+  Lemma LEM: a \/ ~a.
+  Proof.
+    cut (((a \/ ~a) -> ~a) -> (a \/ ~a)).
+    - apply LP.
+    - intro H.
+      right.
+      intro H'.
+      cut a.
+      + cut (a \/ ~a).
+        * assumption.
+        * left.
+          assumption.
+      + assumption.
+  Qed
