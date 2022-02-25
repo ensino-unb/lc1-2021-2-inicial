@@ -185,4 +185,76 @@ Section aula06.
         * left.
           assumption.
       + assumption.
-  Qed
+  Qed.
+
+(** Aula 11 *)       
+
+       Print list.
+Print list_ind.
+
+Require Import List.
+
+Fixpoint size (l: list nat) :=
+  match l with
+  | nil => 0
+  | h::tl => 1 + (size tl)
+  end.
+
+Fixpoint app (l1 l2: list nat) :=
+  match l1 with
+  | nil => l2
+  | h::l1' => h::(app l1' l2)
+  end.
+
+Lemma ex51: forall l1 l2, size(app l1 l2) = size l1 + size l2.
+Proof.
+  induction l1.
+  - intros l2.
+    reflexivity.
+  - intro l2.
+    simpl.
+    rewrite IHl1.
+    reflexivity.
+Qed.
+
+Lemma ex52: forall l, app l nil = l.
+Proof.
+  induction l.
+  - reflexivity.
+  - simpl.
+    rewrite IHl.
+    reflexivity.
+Qed. 
+
+Lemma ex53: forall l1 l2 l3, app (app l1 l2) l3 = app l1 (app l2 l3).
+Proof.
+  induction l1.
+  - intros l2 l3.
+    reflexivity.
+  - intros l2 l3.
+    simpl.
+    rewrite IHl1.
+    reflexivity.
+Qed.
+
+(** Aula 12 *)
+
+Fixpoint rev (l : list nat) :=
+  match l with
+  | nil => l
+  | h::tl => (rev tl) ++ (h::nil)
+  end.
+
+Print "_ ++ _". (* app em notação infixa. *)
+Require Import Lia.
+
+Lemma ex54: forall l, size(rev l) = size l.
+Proof.
+  induction l.
+  - reflexivity.
+  - simpl.
+    rewrite ex51.
+    rewrite IHl.
+    simpl.
+    lia.
+Qed.
