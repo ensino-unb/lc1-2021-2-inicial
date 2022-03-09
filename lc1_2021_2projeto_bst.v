@@ -4,10 +4,9 @@ From Coq Require Import String.
 From Coq Require Export Arith.
 From Coq Require Export Lia.
 
-(*
 Notation  "a >=? b" := (Nat.leb b a) (at level 70) : nat_scope.
 Notation  "a >? b"  := (Nat.ltb b a) (at level 70) : nat_scope.
-*)
+
 
 (** Utilizaremos números naturais para representar as chaves em cada nó de nossas árvores binárias de busca porque os naturais possuem uma ordem total [<=?] com diversos teoremas já provados. *)
 
