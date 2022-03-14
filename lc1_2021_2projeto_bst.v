@@ -127,6 +127,7 @@ Inductive BST {V : Type} : tree V -> Prop :=
     BST r ->
     BST (T l x v r).
 
+
 Hint Constructors BST.
 Ltac inv H := inversion H; clear H; subst.
 
@@ -185,7 +186,6 @@ Ltac bdestruct X :=
 Example is_BST_ex :
   BST ex_tree.
 Proof.
-  unfold ex_tree.
   repeat (constructor; try lia).
 Qed.
 
@@ -201,14 +201,37 @@ Qed.
 Theorem empty_tree_BST : forall (V : Type),
     BST (@empty_tree V).
 Proof.
-(** Substitua esta linha pela sua prova. *)Admitted.
-  
+  intro V.
+  constructor.
+Qed.
+
+(** A tática [bdall] a seguir, simplifica esta prova evitando os passos repetitivos *)
+Ltac bdestruct_guard :=
+  match goal with
+  | |- context [ if ?X =? ?Y then _ else _ ] => bdestruct (X =? Y)
+  | |- context [ if ?X <=? ?Y then _ else _ ] => bdestruct (X <=? Y)
+  | |- context [ if ?X <? ?Y then _ else _ ] => bdestruct (X <? Y)
+  end.
+
+Ltac bdall :=
+  repeat (simpl; bdestruct_guard; try lia; auto).
+
 (** Prove que a função [insert] preserva qualquer propriedade dos nós: *)
 
 Lemma ForallT_insert : forall (V : Type) (P : key -> V -> Prop) (t : tree V),
     ForallT P t -> forall (k : key) (v : V),
       P k v -> ForallT P (insert k v t).
 Proof.
+  induction t.
+  - intros H k v H'.
+    admit.
+  - intros H k0 v0 H'.
+    simpl.
+    bdall.
+    + admit.
+    + admit.
+    + 
+     
 (** Substitua esta linha pela sua prova. *)Admitted.
 
 (** Prove que ao receber uma árvore binária de busca como argumento, a função [insert] gera outra árvore binária de busca. *)
@@ -240,16 +263,6 @@ Proof.
     + bdestruct (k0 <? k0); try lia; auto.
 Qed.
 
-(** A tática [bdall] a seguir, simplifica esta prova evitando os passos repetitivos *)
-Ltac bdestruct_guard :=
-  match goal with
-  | |- context [ if ?X =? ?Y then _ else _ ] => bdestruct (X =? Y)
-  | |- context [ if ?X <=? ?Y then _ else _ ] => bdestruct (X <=? Y)
-  | |- context [ if ?X <? ?Y then _ else _ ] => bdestruct (X <? Y)
-  end.
-
-Ltac bdall :=
-  repeat (simpl; bdestruct_guard; try lia; auto).
 
 Theorem lookup_insert_eq' :
   forall (V : Type) (t : tree V) (d : V) (k : key) (v : V),
