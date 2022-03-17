@@ -239,6 +239,22 @@ Proof.
 Theorem insert_BST : forall (V : Type) (k : key) (v : V) (t : tree V),
     BST t -> BST (insert k v t).
 Proof.
+  induction t.
+  - admit.
+  - intro H.
+    simpl.
+    bdall.
+    + admit.
+    + admit.
+    + Search le.
+      Search "_ <= _".
+      assert (H2: k = k0).
+      {
+        apply Nat.le_antisymm; assumption.
+      }
+      subst.
+      inv H.
+      admit.
 (** Substitua esta linha pela sua prova. *)Admitted.
 
 (** * A correção das funções de busca [lookup] e [bound] *)
