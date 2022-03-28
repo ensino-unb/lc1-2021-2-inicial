@@ -296,7 +296,19 @@ Proof.
 (** Substitua esta linha pela sua prova. *)Admitted.
 
 (** Enuncie e prove os três teoremas análogos para a função [bound]. *)
-    
+
+Theorem bound_empty: forall (V:Type) (k : key), bound k (@empty_tree V) = false.
+Proof.
+  Admitted.
+
+Theorem bound_insert_eq :
+  forall (V : Type) (t : tree V) (k : key) (v: V), bound k (insert k v t) = true.
+Proof.
+  Admitted.
+
+(* Theorem bound_insert_neq : *)
+
+
 (** A relação esperada entre as funções [bound] e [lookup] é que, se [bound k t] retorna [false] então [lookup d k t] retorna o valor default [d]. Prove este fato dado pelo seguinte teorema: *)
 
 Theorem bound_default :
