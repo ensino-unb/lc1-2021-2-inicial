@@ -217,7 +217,8 @@ Ltac bdall :=
   repeat (simpl; bdestruct_guard; try lia; auto).
 
 (** Prove que a função [insert] preserva qualquer propriedade dos nós: *)
-
+(** 3 pontos cada e 3 pontos extras (11 questões) *)
+(*1*)
 Lemma ForallT_insert : forall (V : Type) (P : key -> V -> Prop) (t : tree V),
     ForallT P t -> forall (k : key) (v : V),
       P k v -> ForallT P (insert k v t).
@@ -235,7 +236,7 @@ Proof.
 (** Substitua esta linha pela sua prova. *)Admitted.
 
 (** Prove que ao receber uma árvore binária de busca como argumento, a função [insert] gera outra árvore binária de busca. *)
-
+(*2*)
 Theorem insert_BST : forall (V : Type) (k : key) (v : V) (t : tree V),
     BST t -> BST (insert k v t).
 Proof.
@@ -297,20 +298,24 @@ Proof.
 
 (** Enuncie e prove os três teoremas análogos para a função [bound]. *)
 
+(*3*)
 Theorem bound_empty: forall (V:Type) (k : key), bound k (@empty_tree V) = false.
 Proof.
   Admitted.
 
+(*4*)
 Theorem bound_insert_eq :
   forall (V : Type) (t : tree V) (k : key) (v: V), bound k (insert k v t) = true.
 Proof.
   Admitted.
 
+(*5*)
 (* Theorem bound_insert_neq : *)
 
 
 (** A relação esperada entre as funções [bound] e [lookup] é que, se [bound k t] retorna [false] então [lookup d k t] retorna o valor default [d]. Prove este fato dado pelo seguinte teorema: *)
 
+(*6*)
 Theorem bound_default :
   forall (V : Type) (k : key) (d : V) (t : tree V),
     bound k t = false ->
@@ -345,7 +350,7 @@ Proof. reflexivity. Qed.
 (** Agora vamos provar que esta transformação possui algumas propriedades interessantes. Por exemplo, dada uma árvore binária de busca [t], uma chave [k] associada a um valor [v] ocorre em [t] se, e somente se o par [(k,v)] é um elemento de [elements t]. Dividiremos esta prova em duas partes: *)
 
 (** Prove que a transformação via [elements] é completa, i.e. se uma chave [k] associada a um valor [v] ocorre em [t] então o par [(k,v)] é um elemento de [elements t]: *)
-
+(*7*)
 Theorem elements_complete : forall (V : Type) (k : key) (v d : V) (t : tree V),
     BST t ->
     bound k t = true ->
@@ -368,11 +373,11 @@ Definition uncurry {X Y Z : Type} (f : X -> Y -> Z) '(a, b) :=
   f a b.
 
 Hint Transparent uncurry.
-
+(*8*)
 Lemma elements_preserves_forall : forall (V : Type) (P : key -> V -> Prop) (t : tree V), ForallT P t -> Forall (uncurry P) (elements t).
 Proof.
 (** Substitua esta linha pela sua prova. *)Admitted.
-
+(*9*)
 Theorem elements_correct : forall (V : Type) (k : key) (v d : V) (t : tree V),
     BST t ->
     In (k, v) (elements t) ->
@@ -395,14 +400,14 @@ Definition elements_tr {V : Type} (t : tree V) : list (key * V) :=
   elements_aux t [].
 
 (** Prove que [elements_tr] e [elements] fazem a mesma transformação. *)
-
+(*10*)
 Lemma elements_tr_elements : forall (V : Type) (t : tree V),
     elements_tr t = elements t.
 Proof.
 (** Substitua esta linha pela sua prova. *)Admitted.
 
 (** Prove que a transformação [elements_tr] é correta utilizando a correção de [elements]. *)
-
+(*11*)
 Corollary elements_tr_correct :
   forall (V : Type) (k : key) (v d : V) (t : tree V),
     BST t ->
